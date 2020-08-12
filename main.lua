@@ -39,7 +39,8 @@ function love.load()
     world:generate_enemy_wave("debug")
 
     -- Set Application State
-    game_state = 'Menu'
+    game_state = "title_menu"
+    debug_state = "debug"
 end
 
 function love.update(dt)
@@ -54,7 +55,7 @@ function love.draw()
     world:render()
     
     -- Menu display scripts
-    if game_state == 'Menu' then
+    if game_state == "menu" then
         -- Title Text
         love.graphics.setFont(title_font)
         love.graphics.printf("BlackWing",0 , 50, VIRTUAL_WIDTH, 'center' )
@@ -62,7 +63,7 @@ function love.draw()
         
         -- Instruction Text
         love.graphics.setFont(instruction_font)
-        love.graphics.printf("Launch: Enter", 0, 256, VIRTUAL_WIDTH, 'center')
+        love.graphics.printf("Press Enter to Start", 0, 256, VIRTUAL_WIDTH, 'center')
     end
 
     -- Print Score and Damage
@@ -85,12 +86,20 @@ function love.draw()
 end
 
 function love.keypressed(key)
-    if key == 'escape' and game_state == 'Menu' then
-        love.event.quit()
-    elseif key == 'escape' and game_state ~='Menu' then
-        game_state = 'Menu'
-    elseif (key == 'enter' or key == 'return') and game_state == 'Menu' then
-        game_state = 'Play'
+    if key == 'escape' then
+        if game_state == 'title_screen' then
+            love.event.quit()
+        elseif game_state == "start_menu" then
+            game_state = "title_screen"
+        elseif game_state == "play" then
+            game_state = "pause_menu"
+        elseif game_state == "pause_menu" then
+            game_state = "start_menu"
+        end
+    elseif (key == "enter" or key == "return") and game_state == "start_menu" then
+        game_state = "play"
+    elseif (key == "f1" and (game_state == "title_screen" or game_state == "start_menu")) then
+       debug_state = debug_state == true and false or true 
     end
 end
 
