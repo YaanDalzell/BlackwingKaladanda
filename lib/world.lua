@@ -2,10 +2,8 @@ World = Class{}
 
 function World:init()
     -- Create Player
-    self.bottom_player_border = VIRTUAL_HEIGHT-2
+    self.bottom_player_border = VIRTUAL_HEIGHT-25
     self.top_player_border = VIRTUAL_HEIGHT/2
-    self.left_player_border = 0
-    self.right_player_border = VIRTUAL_WIDTH
     self.player_1 = Player(self)
 
     -- Bullets and Projectiles Exist in the world
@@ -75,6 +73,7 @@ function World:generate_enemy_wave(wave)
 end
 
 function World:collision_detection()
+    ------ Moved to player class ------
     --  Check Player collisions with borders
     --  On side contact, set dx = 0, ddx = 0 reset position
     --  On vertical contact, set dy = 0, ddy = 0 reset position
