@@ -80,6 +80,9 @@ function Player:init(world)
 end
 
 function Player:update(dt)
+    -- Check World Limit Collisions
+    self:check_movement_limits()
+
     -- Update play timer
     self.play_timer = self.play_timer + dt
 
@@ -153,11 +156,11 @@ function Player:update(dt)
     if love.keyboard.isDown('n') then
         self:fire_nuke(self.x, self.y)
     end
-    
+
     -- Update spatials
     self.play_timer = self.play_timer + dt
     self.dx = self.dx+math.floor(self.ddx*dt)
-    self.x = math.max(world.left_player_border+self.width, math.min(self.x+(self.dx*dt), world.right_player_border-self.width))
+    self.x = math.max(self.width, math.min(self.x+(self.dx*dt), VIRTUAL_WIDTH+self.width/2))
     self.dy = self.dy+math.floor(self.ddy*dt)
     self.y = math.min(world.bottom_player_border-self.height, math.max(self.y+self.dy*dt, world.top_player_border))
 
@@ -179,11 +182,12 @@ function Player:update(dt)
 end
 
 function Player:render()
+    -- love.graphics.circle('line', math.floor(self.x), math.floor(self.y), 16)
     love.graphics.draw(
         self.texture,
         self.animation:get_current_frame(),
         math.floor(self.x),
-        math.floor(self.y+self.height/2),
+        math.floor(self.y),
         0,
         self.animation.scale_factor*2,
         self.animation.scale_factor*2,--1,
@@ -279,4 +283,27 @@ function Player:update_weapon_locks(dt)
         end
     end
 end
+
+function Player:check_movement_limits()
+    if self.x <= self.width and (self.ddx < 0 or self.dx < 0) then
+        self.ddx = 0
+        self.dx = 0
+        self.x = 0
+    elseif self.x+self.width >= VIRTUAL_WIDTH and (self.ddx > 0 or self.dx > 0) then
+        self.ddx = 0
+        self.dx = 0
+        self.x = VIRTUAL_WIDTH - self.width
+    end
+    if self.y >= world.bottom_player_border-self.height and (self.ddy > 0 or self.dy > 0) then
+        self.ddy = 0
+        self.dy = 0
+        self.y = world.bottom_player_border-self.height
+    elseif self.y <= world.top_player_border and (self.ddy < 0 or self.dy < 0) then
+        self.ddy = 0
+        self.dy = 0
+        self.y = world.top_player_border
+    end
+end
+
+
 

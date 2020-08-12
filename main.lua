@@ -12,7 +12,7 @@ require "lib/projectile"
 
 WINDOW_WIDTH = 512
 WINDOW_HEIGHT = 800
-VIRTUAL_WIDTH = 256
+VIRTUAL_WIDTH = 500/800*512
 VIRTUAL_HEIGHT = 500
 
 
@@ -68,10 +68,10 @@ function love.draw()
     -- Print Score and Damage
     if game_state == "Play" then 
         love.graphics.setFont(instruction_font)
-        love.graphics.printf("Damage: " , 0, VIRTUAL_HEIGHT - 12, VIRTUAL_WIDTH/2, 'left')
-        love.graphics.rectangle("line", 62, VIRTUAL_HEIGHT - 12- 8-1, 62, 18)
+        love.graphics.printf("Damage: " , 10, VIRTUAL_HEIGHT - 12, VIRTUAL_WIDTH/2, 'left')
+        love.graphics.rectangle("line", 72, VIRTUAL_HEIGHT - 12- 8-1, 82, 18)
         love.graphics.setColor(1, 0, 0)
-        love.graphics.rectangle("fill", 63, VIRTUAL_HEIGHT - 12- 8, 15 * (world.player_1.damage-1), 16)
+        love.graphics.rectangle("fill", 73, VIRTUAL_HEIGHT - 12- 8, 20 * (world.player_1.damage-1), 16)
         love.graphics.setColor(1,1,1)
         love.graphics.printf("Score: ".. world.player_1.score, VIRTUAL_WIDTH /2 + 5, VIRTUAL_HEIGHT - 12, VIRTUAL_WIDTH/2, 'left')
     end
