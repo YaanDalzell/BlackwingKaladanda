@@ -74,11 +74,15 @@ function World:generate_enemy_wave(wave)
     end 
 end
 
+function World:clear_enemy_wave()
+    self.enemies = {}
+end
+
+function World:clear_projectiles()
+    self.projectiles = {}
+end
+
 function World:collision_detection()
-    ------ Moved to player class ------
-    --  Check Player collisions with borders
-    --  On side contact, set dx = 0, ddx = 0 reset position
-    --  On vertical contact, set dy = 0, ddy = 0 reset position
 
     --  Check Enemy Off Screen
     --  If off screen delete

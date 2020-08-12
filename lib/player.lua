@@ -86,10 +86,10 @@ function Player:update(dt)
     -- Update play timer
     self.play_timer = self.play_timer + dt
 
-    -- Debug -- Check Visual Damage Updates
-    self.damage = math.floor(self.play_timer % 5)+1
-    -- Debug -- Check Score Updates
-    self.score = math.floor(self.play_timer)
+    -- -- Debug -- Check Visual Damage Updates
+    -- self.damage = math.floor(self.play_timer % 5)+1
+    -- -- Debug -- Check Score Updates
+    -- self.score = math.floor(self.play_timer)
 
 
     -- Update animations
@@ -194,9 +194,6 @@ function Player:render()
         self.width/2,
         self.height/2
     )
-    love.graphics.print(self.dx, 50, 350)
-    love.graphics.print(self.ddx, 50, 400)
-    love.graphics.print(self.damage, 50, 450)
 end
 
 function Player:generate_animations()
