@@ -30,7 +30,7 @@ function Enemy:init(world, type, level, x, y, r, dx, dy)
     self.level = level
     self.rotation_offset = r
     self.weapon_lock = false
-    self.weapon_timer= 0
+    self.weapon_timer = 0
     self.type = type
     self.dx = dx
     self.dy = dy
@@ -86,7 +86,7 @@ function Enemy:update(dt)
 end
 
 function Enemy:render()
-    love.graphics.circle('line', self.x, self.y, self.width)
+    -- love.graphics.circle('line', self.x, self.y, self.width)
     love.graphics.draw(
         self.texture,
         self.animation:get_current_frame(),
