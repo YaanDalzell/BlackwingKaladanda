@@ -32,12 +32,14 @@ function World:render()
     
     -- render bullets
     self:render_projectiles()
+
     -- render enemies
+    self:render_enemies()
     
     -- render player
     self.player_1:render()
     
-    self:render_enemies()
+    
 end
 
 function World:update_projectiles(dt)
@@ -66,9 +68,9 @@ end
 
 function World:generate_enemy_wave(wave)
     if wave == "debug" then
-        table.insert(self.enemies, Enemy("raider", 0, VIRTUAL_WIDTH/4, 150, 0, 0, 0))
-        table.insert(self.enemies, Enemy("destroyer", 0, VIRTUAL_WIDTH/2, 150, 0, 0, 0))
-        table.insert(self.enemies, Enemy("stealth", 0, VIRTUAL_WIDTH/4*3, 150, 0, 0, 0))
+        table.insert(self.enemies, Enemy(self, "raider", 0, VIRTUAL_WIDTH/4, 150, 0, 0, 0))
+        table.insert(self.enemies, Enemy(self, "destroyer", 0, VIRTUAL_WIDTH/2, 150, 0, 0, 0))
+        table.insert(self.enemies, Enemy(self, "stealth", 0, VIRTUAL_WIDTH/4*3, 150, 0, 0, 0))
     end 
 end
 
