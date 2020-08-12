@@ -182,7 +182,7 @@ function Player:update(dt)
 end
 
 function Player:render()
-    love.graphics.circle('line', math.floor(self.x), math.floor(self.y), 16)
+    -- love.graphics.circle('line', math.floor(self.x), math.floor(self.y), 16)
     love.graphics.draw(
         self.texture,
         self.animation:get_current_frame(),
