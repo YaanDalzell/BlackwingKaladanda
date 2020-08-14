@@ -15,6 +15,7 @@ function World:init()
         ['player_hit'] = love.audio.newSource('resources/sounds/player_hit.wav', 'static'),
         ['player_explode'] = love.audio.newSource('resources/sounds/player_explodes.wav', 'static'),
         ['enemy_explodes'] = love.audio.newSource('resources/sounds/enemy_explode.wav', 'static'),
+        ['damage_warning'] = love.audio.newSource('resources/sounds/damage_warning.wav', 'static'),
     }
 
     -- Create Player
@@ -24,6 +25,7 @@ function World:init()
 
     -- Bullets and Projectiles Exist in the world
     self.projectiles = {}
+    self.enemy_projectiles = {}
 
     -- Enemies exist in the world
     self.enemy_texture = love.graphics.newImage("resources/graphics/enemy_ships.png")
@@ -41,6 +43,9 @@ function World:update(dt)
     self:update_projectiles(dt)
     -- update enemies
     self:update_enemies(dt)
+
+    -- Check collisions detections
+    self:collision_detection()
 
 end
 
@@ -63,13 +68,20 @@ function World:update_projectiles(dt)
     for i = 1, #self.projectiles do
         self.projectiles[i]:update(dt)
     end
+    for i = 1, #self.enemy_projectiles do
+        self.enemy_projectiles[i]:update(dt)
+    end
 end
 
 function World:render_projectiles(dt)
     for i = 1, #self.projectiles do
         self.projectiles[i]:render()
     end
+    for i = 1, #self.enemy_projectiles do
+        self.enemy_projectiles[i]:render()
+    end
 end
+
 
 function World:update_enemies(dt)
     for i = 1, #self.enemies do
@@ -85,9 +97,9 @@ end
 
 function World:generate_enemy_wave(wave)
     if wave == "debug" then
-        table.insert(self.enemies, Enemy(self, "raider", 0, VIRTUAL_WIDTH/4, 150, 0, 0, 0))
-        table.insert(self.enemies, Enemy(self, "destroyer", 0, VIRTUAL_WIDTH/2, 150, 0, 0, 0))
-        table.insert(self.enemies, Enemy(self, "stealth", 0, VIRTUAL_WIDTH/4*3, 150, 0, 0, 0))
+        table.insert(self.enemies, Enemy(self, "raider", 0, VIRTUAL_WIDTH/4, 400, 0, 0, 0))
+        table.insert(self.enemies, Enemy(self, "destroyer", 0, VIRTUAL_WIDTH/2, 400, 0, 0, 0))
+        table.insert(self.enemies, Enemy(self, "stealth", 0, VIRTUAL_WIDTH/4*3, 400, 0, 0, 0))
     end 
 end
 
@@ -97,6 +109,7 @@ end
 
 function World:clear_projectiles()
     self.projectiles = {}
+    self.enemy_projectiles = {}
 end
 
 function World:collision_detection()
@@ -105,11 +118,41 @@ function World:collision_detection()
     --  If off screen delete
 
     --  Check Collisions between ships
-    --  trigger Destroy Enemy, 2*Damage to Player
+    --  Version 1.0 Will use AABB Collision Detection
+    local array_size = #self.enemies
+    for i = 0, array_size - 1 do
+        if detect_ship_collision(self.enemies[array_size - i], self.player_1) == true then
+            self.player_1:damage_ship(1)
+            table.remove(self.enemies, array_size-i)
+        end
+    end
 
-    --  Check collisions between ships and projectiles
-    --  Assign projectile damage to player ship
+    --  Check collisions between player ship and enemy projectiles
+    array_size = #self.enemy_projectiles
+    for i = 0, array_size - 1 do
+        if detect_projectile_collision(self.enemy_projectiles[array_size - i], self.player_1) == true then
+            self.player_1:damage_ship(1)
+            table.remove(self.enemy_projectiles, array_size - i)
+        end
+    end
+    --  Check collisions between enemy ships and player projectiles
+    array_size = #self.projectiles
+    local array_size_2 = #self.enemies
+    for i = 0, array_size - 1 do
+        for j = 0, array_size_2 - 1 do
+            if detect_projectile_collision(self.projectiles[array_size - i], self.enemies[array_size_2 - j]) == true then
+                self.world_sounds["enemy_explodes"]:play()
+                self.player_1.score = self.player_1.score + 1
+                table.remove(self.enemies, array_size_2 - j)
+                table.remove(self.projectiles, array_size - i)
+                return
+            end
+        end
+
+    end
+
+
     --  Trigger Destroy enemy ships
-end
 
+end
 

@@ -68,6 +68,7 @@ function Player:init(world)
     -- Impulse
     self.impulse = 500
 
+
     -- Load player graphics
     self.texture = love.graphics.newImage("/resources/graphics/player_1_ship.png")
     self.frames = generate_quads(self.texture, self.width, self.height)
@@ -187,7 +188,7 @@ function Player:update(dt)
 end
 
 function Player:render()
-    -- love.graphics.circle('line', math.floor(self.x), math.floor(self.y), 16)
+    love.graphics.circle('line', math.floor(self.x), math.floor(self.y), 16)
     love.graphics.draw(
         self.texture,
         self.animation:get_current_frame(),
@@ -310,6 +311,24 @@ function Player:check_movement_limits()
         self.dy = 0
         self.y = world.top_player_border
     end
+end
+
+function Player:damage_ship(damage_amount)
+    self.damage = self.damage+damage_amount
+    world.world_sounds["player_hit"]:play()
+    if self.damage == 4 then
+        world.world_sounds["damage_warning"]:setLooping(true)
+        world.world_sounds["damage_warning"]:play()
+    end
+
+
+    if self.damage >= 5 then
+        world.world_sounds["damage_warning"]:stop()
+        self:destroy_ship()
+    end
+end
+
+function Player:destroy_ship()
 end
 
 

@@ -116,6 +116,7 @@ function love.keypressed(key)
        else DEBUG_STATE = false
         world:clear_enemy_wave()
         world:clear_projectiles()
+        world.player_1 = Player(world)
        end
     end
 end
