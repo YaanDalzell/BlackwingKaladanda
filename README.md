@@ -59,14 +59,17 @@ push.lua
     Copyright (c) 2018 Ulysse Ramage. Provides UI scaling framework
 
 # Resources
-All Resources Copyright (c) Yaan Dalzell
+All Resources Copyright (c) Yaan Dalzell unless otherwise specified
 /resources - Audio, Visual assets etc
 
 advanced_pixel_lcd_7.ttf
-    LCD Clock style font
+    LCD Clock style font. No copyright claim.
 
 Vermin Vibes 1989.ttf
-    Edgy Retro font
+    Edgy Retro font.  No copyright claim.
+    
+Retron2000.ttf
+    Debug font.  No copyright claim.
 
 Cannon flare.png
     pixel-art cannon flare.
