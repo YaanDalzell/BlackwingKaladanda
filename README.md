@@ -60,7 +60,7 @@ push.lua
 
 # Resources
 All Resources Copyright (c) Yaan Dalzell
-/resources - Audio, Visual assets etc
+/resources/sounds - Audio, Visual assets etc
 
 advanced_pixel_lcd_7.ttf
     LCD Clock style font
