@@ -86,7 +86,7 @@ function Enemy:update(dt)
 end
 
 function Enemy:render()
-    -- love.graphics.circle('line', self.x, self.y, self.width)
+    love.graphics.circle('line', self.x, self.y, self.width)
     love.graphics.draw(
         self.texture,
         self.animation:get_current_frame(),
@@ -137,7 +137,7 @@ end
 
 function Enemy:fire_weapon(x, y)
     if self.weapon_lock == false and (self.weapon_timer >= self.weapon_interval or self.weapon_timer == 0) then
-        table.insert(world.projectiles, Projectile(self.weapon, self.x, self.y, 0, -1, 0))
+        table.insert(world.enemy_projectiles, Projectile(self.weapon, self.x, self.y, 0, -1, 0))
         self.weapon_timer = 0
     end
 end
