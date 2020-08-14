@@ -78,8 +78,9 @@ function Player:init(world)
     self.animation = self.animations[self.player_state]
 
 --    -- Sounds
---    world.world_sounds['player_1_engine']:setLooping(true)
---    world.world_sounds['player_1_engine']:play()
+    world.world_sounds["player_1_engine"]:setVolume(0.1)
+    world.world_sounds["player_1_engine"]:setLooping(true)
+    world.world_sounds["player_1_engine"]:play()
 
 end
 
@@ -250,8 +251,8 @@ end
 function Player:fire_nuke(x, y, dy)
     if self.nuke_lock == false then
         -- This might need to be a world thing....  world.world_sounds["nuke"]:setLooping(true)
-        -- This might need to be a world thing....  world.world_sounds["nuke"]:setVolume(0.2)
-        -- This might need to be a world thing.... world.world_sounds["nuke"]:play()
+        world.world_sounds["nuke"]:setVolume(0.2)
+        world.world_sounds["nuke"]:play()
         nuke = Projectile("nuke", self.x, self.y, math.pi, 1, 0)
         table.insert(world.projectiles, nuke)
         self.nuke_lock = true
