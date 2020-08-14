@@ -32,14 +32,12 @@ function World:render()
     
     -- render bullets
     self:render_projectiles()
-
     -- render enemies
-    self:render_enemies()
     
     -- render player
     self.player_1:render()
     
-    
+    self:render_enemies()
 end
 
 function World:update_projectiles(dt)
@@ -68,21 +66,17 @@ end
 
 function World:generate_enemy_wave(wave)
     if wave == "debug" then
-        table.insert(self.enemies, Enemy(self, "raider", 0, VIRTUAL_WIDTH/4, 150, 0, 0, 0))
-        table.insert(self.enemies, Enemy(self, "destroyer", 0, VIRTUAL_WIDTH/2, 150, 0, 0, 0))
-        table.insert(self.enemies, Enemy(self, "stealth", 0, VIRTUAL_WIDTH/4*3, 150, 0, 0, 0))
+        table.insert(self.enemies, Enemy("raider", 0, VIRTUAL_WIDTH/4, 150, 0, 0, 0))
+        table.insert(self.enemies, Enemy("destroyer", 0, VIRTUAL_WIDTH/2, 150, 0, 0, 0))
+        table.insert(self.enemies, Enemy("stealth", 0, VIRTUAL_WIDTH/4*3, 150, 0, 0, 0))
     end 
 end
 
-function World:clear_enemy_wave()
-    self.enemies = {}
-end
-
-function World:clear_projectiles()
-    self.projectiles = {}
-end
-
 function World:collision_detection()
+    ------ Moved to player class ------
+    --  Check Player collisions with borders
+    --  On side contact, set dx = 0, ddx = 0 reset position
+    --  On vertical contact, set dy = 0, ddy = 0 reset position
 
     --  Check Enemy Off Screen
     --  If off screen delete

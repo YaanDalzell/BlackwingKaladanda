@@ -22,15 +22,14 @@ DESTROYER_LEFT = 13
 DESTROYER_EXPLOSION_1 = 14
 DESTROYER_EXPLOSION_2 = 15
 
-function Enemy:init(world, type, level, x, y, r, dx, dy)
+function Enemy:init(type, level, x, y, r, dx, dy)
     -- Set base level variables
     self.state = "idle"
     self.width = 10
     self.height = 10
     self.level = level
     self.rotation_offset = r
-    self.weapon_lock = false
-    self.weapon_timer = 0
+    self.fire_lock = false
     self.type = type
     self.dx = dx
     self.dy = dy
@@ -48,24 +47,21 @@ function Enemy:init(world, type, level, x, y, r, dx, dy)
         self.right_frame = STEALTH_RIGHT
         self.explode_frame_1 = STEALTH_EXPLOSION_1
         self.explode_frame_2 = STEALTH_EXPLOSION_2
-        self.weapon = "nuke"
-        self.weapon_interval = 10
+        self.fire_timer = 100
     elseif self.type == "raider" then
         self.idle_frame = RAIDER_IDLE
         self.left_frame = RAIDER_LEFT
         self.right_frame = RAIDER_RIGHT
         self.explode_frame_1 = RAIDER_EXPLOSION_1
         self.explode_frame_2 = RAIDER_EXPLOSION_2
-        self.weapon = "bullet"
-        self.weapon_interval = 1
+        self.fire_timer = 50
     elseif self.type == "destroyer" then
         self.idle_frame = DESTROYER_IDLE
         self.left_frame = DESTROYER_LEFT
         self.right_frame = DESTROYER_RIGHT
         self.explode_frame_1 = DESTROYER_EXPLOSION_1
         self.explode_frame_2 = DESTROYER_EXPLOSION_2
-        self.weapon = "missile"
-        self.weapon_interval = 3
+        self.fire_timer = 200
     end
 
     -- Generate Animations
@@ -78,20 +74,16 @@ function Enemy:init(world, type, level, x, y, r, dx, dy)
 end
 
 function Enemy:update(dt)
-    -- Fire Weapon
-    self:fire_weapon()
-    self:update_weapon_timer(dt)
     self.x = self.x+self.dx
     self.y = self.y+self.dy
 end
 
 function Enemy:render()
-    -- love.graphics.circle('line', self.x, self.y, self.width)
     love.graphics.draw(
         self.texture,
         self.animation:get_current_frame(),
         math.floor(self.x),
-        math.floor(self.y),
+        math.floor(self.y+self.height/2),
         0,
         self.animation.scale_factor*2,
         self.animation.scale_factor*2,--1,
@@ -133,15 +125,4 @@ function Enemy:generate_animations()
         },
     }
     return animations
-end
-
-function Enemy:fire_weapon(x, y)
-    if self.weapon_lock == false and (self.weapon_timer >= self.weapon_interval or self.weapon_timer == 0) then
-        table.insert(world.projectiles, Projectile(self.weapon, self.x, self.y, 0, -1, 0))
-        self.weapon_timer = 0
-    end
-end
-
-function Enemy:update_weapon_timer(dt)
-    self.weapon_timer = self.weapon_timer+dt
 end
