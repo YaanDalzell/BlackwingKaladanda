@@ -39,7 +39,7 @@ function Projectile:init(type, x, y, r, dy, offset)
         self.hit_frame = TILE_NUKE_HIT
     end
 
-    self.texture = love.graphics.newImage("/resources/projectiles.png")
+    self.texture = love.graphics.newImage("/resources/graphics/projectiles.png")
     self.frames = generate_quads(self.texture, 7, 7)
 end
 

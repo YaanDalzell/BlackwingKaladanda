@@ -38,7 +38,7 @@ function Enemy:init(world, type, level, x, y, r, dx, dy)
     self.y = y
     
     -- Load textures
-    self.texture = love.graphics.newImage("/resources/enemy_ships.png")
+    self.texture = love.graphics.newImage("/resources/graphics/enemy_ships.png")
     self.frames = generate_quads(self.texture, self.width, self.height)
 
     -- Define Frames and Fire Intervals as per type

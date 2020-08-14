@@ -34,10 +34,10 @@ function love.load()
 
     love.graphics.setDefaultFilter("nearest", "nearest")
     -- Load Fonts
-    title_font = love.graphics.newFont("/resources/Vermin Vibes 1989.ttf", 32)
-    default_font = love.graphics.newFont("/resources/advanced_pixel_lcd-7.ttf", 8)
-    fps_font = love.graphics.newFont("/resources/advanced_pixel_lcd-7.ttf", 6)
-    debug_font = love.graphics.newFont("/resources/Retron2000.ttf", 8)
+    title_font = love.graphics.newFont("/resources/fonts/Vermin Vibes 1989.ttf", 32)
+    default_font = love.graphics.newFont("/resources/fonts/advanced_pixel_lcd-7.ttf", 8)
+    fps_font = love.graphics.newFont("/resources/fonts/advanced_pixel_lcd-7.ttf", 6)
+    debug_font = love.graphics.newFont("/resources/fonts/Retron2000.ttf", 8)
     -- Create world 
     world = World()
 

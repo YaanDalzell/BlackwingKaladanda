@@ -1,6 +1,22 @@
 World = Class{}
 
 function World:init()
+    -- Load World Sounds
+    self.world_sounds = {
+        -- Weapon Sounds
+        ['cannon'] = love.audio.newSource('resources/sounds/cannon.wav', 'static'),
+        ['missile'] = love.audio.newSource('resources/sounds/missile.wav', 'static'),
+        ['nuke'] = love.audio.newSource('resources/sounds/nuke_warning.wav', 'static'),
+        ['enemy_cannon'] = love.audio.newSource('resources/sounds/enemy_cannon.wav', 'static'),
+        ['kaladanda_fire'] = love.audio.newSource('resources/sounds/kaladanda_fire.wav', 'static'),
+
+        -- Environment Sounds
+        ['player_1_engine'] = love.audio.newSource('resources/sounds/thrusters.mp3', 'static'),
+        ['player_hit'] = love.audio.newSource('resources/sounds/player_hit.wav', 'static'),
+        ['player_explode'] = love.audio.newSource('resources/sounds/player_explodes.wav', 'static'),
+        ['enemy_explodes'] = love.audio.newSource('resources/sounds/enemy_explode.wav', 'static'),
+    }
+
     -- Create Player
     self.bottom_player_border = VIRTUAL_HEIGHT-25
     self.top_player_border = VIRTUAL_HEIGHT/2
@@ -10,7 +26,7 @@ function World:init()
     self.projectiles = {}
 
     -- Enemies exist in the world
-    self.enemy_texture = love.graphics.newImage("resources/enemy_ships.png")
+    self.enemy_texture = love.graphics.newImage("resources/graphics/enemy_ships.png")
     self.enemy_frames = generate_quads(self.enemy_texture, 10, 10)
     self.enemies = {}
 
@@ -25,6 +41,7 @@ function World:update(dt)
     self:update_projectiles(dt)
     -- update enemies
     self:update_enemies(dt)
+
 end
 
 function World:render()
