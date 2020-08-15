@@ -15,6 +15,9 @@ function World:init()
         ['cannon'] = love.audio.newSource('resources/sounds/cannon.wav', 'static'),
         ['missile'] = love.audio.newSource('resources/sounds/missile.wav', 'static'),
         ['nuke'] = love.audio.newSource('resources/sounds/nuke_warning.wav', 'static'),
+        ['player_nuke_warning'] = love.audio.newSource('resources/sounds/player_nuke_warning.wav', 'static'),
+        ['enemy_nuke_warning'] = love.audio.newSource('resources/sounds/enemy_nuke_warning.wav', 'static'),
+        ['enemy_missile'] = love.audio.newSource('resources/sounds/enemy_missile.wav', 'static'),
         ['enemy_cannon'] = love.audio.newSource('resources/sounds/enemy_cannon.wav', 'static'),
         ['kaladanda_fire'] = love.audio.newSource('resources/sounds/kaladanda_fire.wav', 'static'),
 
@@ -158,6 +161,7 @@ function World:collision_detection()
     for i = 0, array_size - 1 do
         if detect_ship_collision(self.enemies[array_size - i], self.player_1) == true then
             self.player_1:damage_ship(1)
+            self.world_sounds["enemy_explodes"]:play()
             table.remove(self.enemies, array_size-i)
         end
     end

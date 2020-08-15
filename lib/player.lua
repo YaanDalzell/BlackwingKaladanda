@@ -100,12 +100,6 @@ function Player:update(dt)
     -- Update play timer
     self.play_timer = self.play_timer + dt
 
-    -- -- Debug -- Check Visual Damage Updates
-    -- self.damage = math.floor(self.play_timer % 5)+1
-    -- -- Debug -- Check Score Updates
-    -- self.score = math.floor(self.play_timer)
-
-
     -- Update animations
     self.animations = self:generate_animations()
     -- Update Ship Damage Level
@@ -259,9 +253,9 @@ end
 
 function Player:fire_nuke(x, y, dy)
     if self.nuke_lock == false then
-        -- This might need to be a world thing....  world.world_sounds["nuke"]:setLooping(true)
         world.world_sounds["nuke"]:setVolume(0.2)
         world.world_sounds["nuke"]:play()
+        world.world_sounds["player_nuke_warning"]:play()
         nuke = Projectile("nuke", self.x, self.y, math.pi, 1, 0)
         table.insert(world.projectiles, nuke)
         self.nuke_lock = true
