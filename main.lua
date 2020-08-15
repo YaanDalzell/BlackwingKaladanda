@@ -46,6 +46,9 @@ function love.load()
     -- Set visual filter
     love.graphics.setDefaultFilter("nearest", "nearest")
 
+    -- Set menu Sound
+    menu_select = love.audio.newSource('resources/sounds/menu_select.wav', 'static')
+
     -- Load Fonts
     title_font = love.graphics.newFont("/resources/fonts/Vermin Vibes 1989.ttf", 32)
     default_font = love.graphics.newFont("/resources/fonts/advanced_pixel_lcd-7.ttf", 8)
@@ -114,28 +117,38 @@ end
 function love.keypressed(key)
     if key == 'escape' then
         if game_state == 'title_screen' then
+            menu_select:play()
             love.event.quit()
         elseif game_state == "start_menu" then
+            menu_select:play()
             game_state = "title_screen"
         elseif game_state == "play" then
+            menu_select:play()
             game_state = "pause_menu"
         elseif game_state == "pause_menu" then
+            menu_select:play()
             game_state = "start_menu"
         end
     elseif (key == "enter" or key == "return") then
-        if game_state == "title_screen" then game_state = "start_menu"
-        elseif game_state == "start_menu" then game_state = "play"
-        elseif game_state == "pause_menu" then game_state = "play"
+        if game_state == "title_screen" then
+            menu_select:play()
+            game_state = "start_menu"
+        elseif game_state == "start_menu" then
+            menu_select:play()
+            game_state = "play"
+        elseif game_state == "pause_menu" then
+            menu_select:play()
+            game_state = "play"
         end
     elseif (key == "f1" and (game_state == "title_screen" or game_state == "start_menu")) then
-       if DEBUG_STATE == false then
-        DEBUG_STATE = true
-        world:generate_enemy_wave("debug") 
-       else DEBUG_STATE = false
-        world:clear_enemy_wave()
-        world:clear_projectiles()
-        world.player_1 = Player(world)
-       end
+        if DEBUG_STATE == false then
+            DEBUG_STATE = true
+            world:generate_enemy_wave("debug")
+        else DEBUG_STATE = false
+            world:clear_enemy_wave()
+            world:clear_projectiles()
+            world.player_1 = Player(world)
+        end
     end
 end
 
