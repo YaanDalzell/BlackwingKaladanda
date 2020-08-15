@@ -60,6 +60,10 @@ function love.draw()
         love.graphics.print("Player 1 dx:         " ..world.player_1.dx, 10, 50)
         love.graphics.print("Player 1 ddx:       " ..world.player_1.ddx, 10, 60)
         love.graphics.print("Player 1 damage:  "..world.player_1.damage, 10, 70)
+        love.graphics.print("Registered Enemy Projectiles: ".. #world.enemy_projectiles, 10, 80)
+        love.graphics.print("Registered Player Projectiles: ".. #world.projectiles, 10, 90)
+        love.graphics.print("Registered Enemies: ".. #world.enemies, 10, 100)
+
         love.graphics.setFont(default_font)
     end
     push:apply('start') 
@@ -77,6 +81,7 @@ function love.draw()
         -- Instruction Text
         love.graphics.setFont(default_font)
         love.graphics.printf("Press Enter to Start", 0, 256, VIRTUAL_WIDTH, 'center')
+        love.graphics.printf("Press Escape to Quit", 0, 300, VIRTUAL_WIDTH, 'center')
     end
 
     -- Print Score and Damage
