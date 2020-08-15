@@ -43,4 +43,3 @@ function detect_projectile_collision(projectile, ship)
         return true
     end
 end
-

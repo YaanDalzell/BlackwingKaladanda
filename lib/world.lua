@@ -39,8 +39,10 @@ function World:update(dt)
 
     -- update player
     self.player_1:update(dt)
+
     -- update bullets
     self:update_projectiles(dt)
+
     -- update enemies
     self:update_enemies(dt)
 
@@ -114,12 +116,33 @@ end
 
 function World:collision_detection()
 
-    --  Check Enemy Off Screen
-    --  If off screen delete
+    --  Check Stale Enemies
+    local array_size = #self.enemies
+    for i = 0, array_size - 1 do
+        if self:check_stale(self.enemies[array_size-i], "enemy")  == true then
+            table.remove(self.enemies, array_size-i)
+        end
+    end
+
+    --  Check Stale Enemy Projectiles
+    array_size = #self.enemy_projectiles
+    for i = 0, array_size - 1 do
+        if self:check_stale(self.enemy_projectiles[array_size-i], "enemy_projectile") == true then
+            table.remove(self.enemy_projectiles, array_size-i)
+        end
+    end
+
+    --  Check Stale Player Projectiles
+    array_size = #self.projectiles
+    for i = 0, array_size - 1 do
+        if self:check_stale(self.projectiles[array_size-i], "projectile") == true then
+            table.remove(self.projectiles, array_size-i)
+        end
+    end
 
     --  Check Collisions between ships
     --  Version 1.0 Will use AABB Collision Detection
-    local array_size = #self.enemies
+    array_size = #self.enemies
     for i = 0, array_size - 1 do
         if detect_ship_collision(self.enemies[array_size - i], self.player_1) == true then
             self.player_1:damage_ship(1)
@@ -148,11 +171,26 @@ function World:collision_detection()
                 return
             end
         end
-
     end
-
-
-    --  Trigger Destroy enemy ships
-
 end
 
+
+function World:check_stale(instance, instance_type)
+    if instance_type == "enemy" or instance_type == "enemy_projectile" then
+        if instance.x - instance.width > VIRTUAL_WIDTH or
+                instance.x + instance.width < 0 or
+                instance.y - instance.height > VIRTUAL_HEIGHT
+            then return true
+        end
+        return false
+    end
+    if instance_type == "projectile" then
+        if instance.x - instance.width > VIRTUAL_WIDTH or
+                instance.x + instance.width < 0 or
+                instance.y - instance.height < 0
+        then return true
+        end
+        return false
+    end
+    return false
+end
