@@ -43,5 +43,3 @@ function detect_projectile_collision(projectile, ship)
         return true
     end
 end
-
-function check_stale (instance, type) end

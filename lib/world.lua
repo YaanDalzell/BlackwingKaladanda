@@ -140,7 +140,6 @@ function World:collision_detection()
         end
     end
 
-
     --  Check Collisions between ships
     --  Version 1.0 Will use AABB Collision Detection
     array_size = #self.enemies
@@ -172,12 +171,7 @@ function World:collision_detection()
                 return
             end
         end
-
     end
-
-
-    --  Trigger Destroy enemy ships
-
 end
 
 
