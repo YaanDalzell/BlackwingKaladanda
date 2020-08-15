@@ -43,7 +43,9 @@ function love.load()
         }
     )
 
---    love.graphics.setDefaultFilter("nearest", "nearest")
+    -- Set visual filter
+    love.graphics.setDefaultFilter("nearest", "nearest")
+
     -- Load Fonts
     title_font = love.graphics.newFont("/resources/fonts/Vermin Vibes 1989.ttf", 32)
     default_font = love.graphics.newFont("/resources/fonts/advanced_pixel_lcd-7.ttf", 8)

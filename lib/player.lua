@@ -38,6 +38,7 @@ function Player:init(world)
     self.player_state = "idle"
     self.score = 0
     self.damage = 1
+    self.max_damage = 5
     self.play_timer = 0
     self.width = 16
     self.height = 16
@@ -321,15 +322,15 @@ function Player:check_movement_limits()
 end
 
 function Player:damage_ship(damage_amount)
-    self.damage = self.damage+damage_amount
+    self.damage = math.min(self.damage + damage_amount, self.max_damage)
     world.world_sounds["player_hit"]:play()
-    if self.damage == 4 then
+    if self.damage == self.max_damage - 1 then
         world.world_sounds["damage_warning"]:setLooping(true)
         world.world_sounds["damage_warning"]:play()
     end
 
 
-    if self.damage >= 5 then
+    if self.damage == self.max_damage then
         world.world_sounds["damage_warning"]:stop()
         self:destroy_ship()
     end
