@@ -1,3 +1,10 @@
+-- Created in VSCode
+-- User: Yaan Dalzell
+-- Date:
+-- Time:
+
+-- Description: Creates an enemy object for Blackwing Kaladanda V1.0
+
 Enemy = Class{}
 
 -- Frame ID's

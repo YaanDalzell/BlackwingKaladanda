@@ -1,3 +1,10 @@
+-- Created in VSCode
+-- User: Yaan Dalzell
+-- Date:
+-- Time:
+
+-- Description: Defines the player avatar for Blackwing Kaladanda V1.0
+
 Player = Class{}
 
 -- Frame ID's
