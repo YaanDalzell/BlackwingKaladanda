@@ -1,3 +1,11 @@
+-- Created in VSCode
+-- User: Yaan Dalzell
+-- Date:
+-- Time:
+
+-- Description: Provides "world" functionality to Blackwing Kaladanda V1.0
+
+
 World = Class{}
 
 function World:init()
@@ -32,10 +40,14 @@ function World:init()
     self.enemy_frames = generate_quads(self.enemy_texture, 10, 10)
     self.enemies = {}
 
+    -- Set Scenery
+    self.scene = star_scape()
+
 end
 
 function World:update(dt)
     -- update scenery
+    self.scene:update(dt)
 
     -- update player
     self.player_1:update(dt)
@@ -53,7 +65,7 @@ end
 
 function World:render()
     -- render scenery
-    
+    self.scene:render()
     -- render bullets
     self:render_projectiles()
 

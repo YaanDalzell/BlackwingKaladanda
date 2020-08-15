@@ -1,3 +1,10 @@
+-- Created in VSCode
+-- User: Yaan Dalzell
+-- Date:
+-- Time:
+
+-- Description: Provides animation for Blackwing Kaladanda V1.0
+
 Animation = Class{}
 
 function Animation:init(params)

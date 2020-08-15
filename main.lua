@@ -1,3 +1,10 @@
+-- Created in VSCode
+-- User: Yaan Dalzell
+-- Date: Some time in 2020. Remember 2020? That was fun.
+-- Time:
+
+-- Description: Blackwing Kaladanda main Lua script. Please see README.md for more information.
+
 
 -- Dependencies
 Class = require "lib/class"
@@ -8,6 +15,10 @@ require "lib/utilities"
 require "lib/player"
 require "lib/animator"
 require "lib/projectile"
+require "lib/star_scape"
+require "lib/pixel"
+
+
 
 
 WINDOW_WIDTH = 512
@@ -32,7 +43,7 @@ function love.load()
         }
     )
 
-    love.graphics.setDefaultFilter("nearest", "nearest")
+--    love.graphics.setDefaultFilter("nearest", "nearest")
     -- Load Fonts
     title_font = love.graphics.newFont("/resources/fonts/Vermin Vibes 1989.ttf", 32)
     default_font = love.graphics.newFont("/resources/fonts/advanced_pixel_lcd-7.ttf", 8)
@@ -51,22 +62,11 @@ function love.update(dt)
 end
 
 function love.draw()
-    -- Dubug FPS
-    if DEBUG_STATE == true then
-        displayFPS()
-        love.graphics.setFont(debug_font)
-        love.graphics.print("Debug Mode", 10, 30)
-        love.graphics.print("Game State:          " ..game_state, 10, 40)
-        love.graphics.print("Player 1 dx:         " ..world.player_1.dx, 10, 50)
-        love.graphics.print("Player 1 ddx:       " ..world.player_1.ddx, 10, 60)
-        love.graphics.print("Player 1 damage:  "..world.player_1.damage, 10, 70)
-        love.graphics.setFont(default_font)
-    end
-    push:apply('start') 
+    push:apply('start')
+        love.graphics.clear(0.1,0.1,0.2,1)
 
     -- Render world
     world:render()
-    
     -- Menu display scripts
     if game_state == "title_screen" then
         -- Title Text
@@ -91,6 +91,22 @@ function love.draw()
     end 
     
      push:apply("end")
+
+    -- Dubug FPS
+    if DEBUG_STATE == true then
+        displayFPS()
+        love.graphics.setFont(debug_font)
+        love.graphics.print("Debug Mode", 10, 30)
+        love.graphics.print("Game State:          " ..game_state, 10, 40)
+        love.graphics.print("Player 1 dx:         " ..world.player_1.dx, 10, 50)
+        love.graphics.print("Player 1 ddx:       " ..world.player_1.ddx, 10, 60)
+        love.graphics.print("Player 1 damage:  "..world.player_1.damage, 10, 70)
+        love.graphics.print("Registered Enemy Projectiles: ".. #world.enemy_projectiles, 10, 80)
+        love.graphics.print("Registered Player Projectiles: ".. #world.projectiles, 10, 90)
+        love.graphics.print("Registered Enemies: ".. #world.enemies, 10, 100)
+        love.graphics.print("Registered Scene Pixels: ".. #world.scene.pixels, 10, 110)
+        love.graphics.setFont(default_font)
+    end
 end
 
 function love.keypressed(key)

@@ -26,48 +26,65 @@ X1 Blackwing Specs: Momentum Control Interface
 
 # Structure
 Scripted in Lua, the general structure involves:
+
 /lib - Classes and other scripts
+
+animator.lua
+    Provides animation functionality
+    
+class.lua
+    Copyright (c) 2010-2013 Matthias Richter. Provides OOP structure to Lua
+    
+enemy.lua
+    Provides specific functionality to enemy ships
+    
+pixel.lua
+    Creates a pixel class for use in Blackwing Kaladanda V1.0
+    
+player.lua
+    Provides specific functionality including control to the players avatar
+    
+projectile.lua
+    Provides specific functionality to all projectiles    
+    
+push.lua
+    Copyright (c) 2018 Ulysse Ramage. Provides UI scaling framework
+    
+star_scape.lua
+    Creates a very simple proceduraly generated "star map" background for Blackwing Kaladanda V1.0
+
+story.lua 
+    Story Information for Blackwing Kaladanda V1.0
+    
+utilities.lua
+    Provides some general utility functions
+    
 main.lua:
     manages game states and other low level functionality
     Children:   World Class
 
 world.lua
     Manages the games environment. Objects such as the player, enemies and projectiles exist in the world.
-    
-enemy.lua
-    Provides specific functionality to enemy ships
 
-projectile.lua
-    Provides specific functionality to all projectiles
 
-player.lua
-    Provides specific functionality including control to the players avatar
-
-story.lua
-    Provides story information
-
-utilities.lua
-    Provides some general utility functions
-
-animator.lua
-    Provides animation functionality
-
-class.lua
-    Copyright (c) 2010-2013 Matthias Richter. Provides OOP structure to Lua
-
-push.lua
-    Copyright (c) 2018 Ulysse Ramage. Provides UI scaling framework
 
 # Resources
-All Resources Copyright (c) Yaan Dalzell
+All Resources Copyright (c) Yaan Dalzell Unless otherwise specified
 /resources/sounds - Audio, Visual assets etc
 
+
+##Fonts
+
 advanced_pixel_lcd_7.ttf
-    LCD Clock style font
+    LCD Clock style font - No copyright claim
+    
+Retron2000.ttf
+    General font - No copyright claim
 
 Vermin Vibes 1989.ttf
-    Edgy Retro font
+    Edgy Retro font - No copyright claim
 
+## Graphics
 Cannon flare.png
     pixel-art cannon flare.
 
@@ -79,6 +96,17 @@ player_1_ship.png
 
 projectiles.png
     pixel art projectiles. Frame size: 7x7, sheet size: 3x2
-
+    
+##Sounds
+cannon.wav
+damage_warning.wav
+enemy_cannon.wav
+enemy_explode.wav
+kaladanda_fire.wav
+missile.wav
+nuke_warning.wav
+player_explodes.wav
+player_hit.wav
+thrusters.mp3
 
 

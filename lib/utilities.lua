@@ -1,3 +1,10 @@
+-- Created in VSCode
+-- User: Yaan Dalzell
+-- Date:
+-- Time:
+
+-- Description: General Functions for Blackwing Kaladanda V1.0
+
 function generate_quads(atlas, tile_width, tile_height)
     local sheet_width = atlas:getWidth()/tile_width
     local sheet_height = atlas:getHeight()/tile_height

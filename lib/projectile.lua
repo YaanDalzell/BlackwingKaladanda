@@ -1,3 +1,10 @@
+-- Created in VSCode
+-- User: Yaan Dalzell
+-- Date:
+-- Time:
+
+-- Description: Defines projectile behaviours for Blackwing Kaladanda V1.0
+
 Projectile = Class{}
 
 TILE_BULLET = 1
