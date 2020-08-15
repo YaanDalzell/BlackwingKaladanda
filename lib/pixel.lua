@@ -7,15 +7,17 @@
 
 Pixel = Class{}
 
-function Pixel:init(x, y, dx, dy, params)
+function Pixel:init(x, y, dx, dy, width, height, colour)
     self.x = x
     self.y = y
     self.dx = dx
     self.dy = dy
-    self.r = params["r"]
-    self.g = params["g"]
-    self.b = params["b"]
-    self.a = params["a"]
+    self.width = width
+    self.height = height
+    self.r = colour["r"]
+    self.g = colour["g"]
+    self.b = colour["b"]
+    self.a = colour["a"]
 end
 
 function Pixel:update(dt)
@@ -29,8 +31,8 @@ function Pixel:render()
     "fill",
     self.x,
     self.y,
-    2,
-    2
+    self.width,
+    self.height
     )
     love.graphics.setColor(1, 1, 1, 1)
 end
