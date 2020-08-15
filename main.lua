@@ -62,7 +62,10 @@ function love.load()
 end
 
 function love.update(dt)
-    world:update(dt)
+    if game_state ~= "pause_menu" then
+        world:update(dt)
+    end
+
 
 end
 
@@ -82,6 +85,19 @@ function love.draw()
         -- Instruction Text
         love.graphics.setFont(default_font)
         love.graphics.printf("Press Enter to Start", 0, 256, VIRTUAL_WIDTH, 'center')
+        love.graphics.printf("Press Esc to quit", 0, 300, VIRTUAL_WIDTH, 'center')
+    end
+
+    if game_state == "pause_menu" then
+        -- Title Text
+        love.graphics.setFont(title_font)
+        love.graphics.printf("Game",0 , 50, VIRTUAL_WIDTH, "center" )
+        love.graphics.printf("Paused",0 , 80, VIRTUAL_WIDTH, "center" )
+
+        -- Instruction Text
+        love.graphics.setFont(default_font)
+        love.graphics.printf("Press Enter to Resume", 0, 256, VIRTUAL_WIDTH, 'center')
+        love.graphics.printf("Press Esc to Return to Main Menu", 0, 300, VIRTUAL_WIDTH, 'center')
     end
 
     -- Print Score and Damage
@@ -119,23 +135,29 @@ function love.keypressed(key)
         if game_state == 'title_screen' then
             menu_select:play()
             love.event.quit()
-        elseif game_state == "start_menu" then
-            menu_select:play()
-            game_state = "title_screen"
+--        Disabled Until we need a start menu
+--        elseif game_state == "start_menu" then
+--            menu_select:play()
+--            game_state = "title_screen"
         elseif game_state == "play" then
             menu_select:play()
             game_state = "pause_menu"
         elseif game_state == "pause_menu" then
             menu_select:play()
-            game_state = "start_menu"
+--        Disabled Until we need a start menu
+--            game_state = "start_menu"
+            game_state = "title_screen"
         end
     elseif (key == "enter" or key == "return") then
         if game_state == "title_screen" then
             menu_select:play()
-            game_state = "start_menu"
-        elseif game_state == "start_menu" then
-            menu_select:play()
+--          Disabled Until we need a start menu
+--          game_state = "start_menu"
             game_state = "play"
+--        Disabled Until we need a start menu
+--        elseif game_state == "start_menu" then
+--            menu_select:play()
+--            game_state = "play"
         elseif game_state == "pause_menu" then
             menu_select:play()
             game_state = "play"
