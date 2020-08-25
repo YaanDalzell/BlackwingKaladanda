@@ -96,15 +96,11 @@ function Wave:render()
         love.graphics.printf("Wave " ..tostring(self.wave),0 , 200, VIRTUAL_WIDTH, "center" )
         love.graphics.setFont(default_font)
     end
-
-
-    love.graphics.printf("State:"..(self.wave_state),0 , 200, VIRTUAL_WIDTH, "center" )
-    love.graphics.printf("Enemies:"..tostring(#self.world.enemies),0 , 230, VIRTUAL_WIDTH, "center" )
-    love.graphics.printf("Raiders:"..tostring(self.raiders_deployed).."/"..tostring(self.max_raider_deployments),0 , 260, VIRTUAL_WIDTH, "center" )
-    love.graphics.printf("Destroyers:"..tostring(self.destroyers_deployed).."/"..tostring(self.max_destroyer_deployments),0 , 290, VIRTUAL_WIDTH, "center" )
-    love.graphics.printf("Stealths:"..tostring(self.stealths_deployed).."/"..tostring(self.max_stealth_deployents),0 , 320, VIRTUAL_WIDTH, "center" )
-
-
+--    love.graphics.printf("State:"..(self.wave_state),0 , 200, VIRTUAL_WIDTH, "center" )
+--    love.graphics.printf("Enemies:"..tostring(#self.world.enemies),0 , 230, VIRTUAL_WIDTH, "center" )
+--    love.graphics.printf("Raiders:"..tostring(self.raiders_deployed).."/"..tostring(self.max_raider_deployments),0 , 260, VIRTUAL_WIDTH, "center" )
+--    love.graphics.printf("Destroyers:"..tostring(self.destroyers_deployed).."/"..tostring(self.max_destroyer_deployments),0 , 290, VIRTUAL_WIDTH, "center" )
+--    love.graphics.printf("Stealths:"..tostring(self.stealths_deployed).."/"..tostring(self.max_stealth_deployents),0 , 320, VIRTUAL_WIDTH, "center" )
 end
 
 
