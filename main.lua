@@ -17,6 +17,7 @@ require "lib/animator"
 require "lib/projectile"
 require "lib/star_scape"
 require "lib/pixel"
+require "lib/wave_generator"
 
 
 
@@ -154,6 +155,8 @@ function love.keypressed(key)
 --          Disabled Until we need a start menu
 --          game_state = "start_menu"
             game_state = "play"
+            world.wave = Wave(world, 1)
+            world.wave_counter = 1
 --        Disabled Until we need a start menu
 --        elseif game_state == "start_menu" then
 --            menu_select:play()
