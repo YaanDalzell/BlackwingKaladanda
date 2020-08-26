@@ -46,7 +46,7 @@ function Player:init(world)
     -- Control Weapons Repeat Rate
     self.cannon_lock = false
     self.cannon_timer = 0
-    self.cannon_interval = 0.5
+    self.cannon_interval = 0.2
     self.cannon_offset = 10
 
 

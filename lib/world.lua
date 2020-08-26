@@ -46,9 +46,18 @@ function World:init()
     -- Set Scenery
     self.scene = star_scape()
 
+    -- Track Wave
+    self.wave_counter = 0
+    self.wave_timer = 0
+    self.wave = Wave(self,0)
+
 end
 
 function World:update(dt)
+    if self.wave_counter > 0 then-- Update Wave
+        self.wave:update(dt)
+    end
+
     -- update scenery
     self.scene:update(dt)
 
@@ -67,8 +76,10 @@ function World:update(dt)
 end
 
 function World:render()
+
     -- render scenery
     self.scene:render()
+
     -- render bullets
     self:render_projectiles()
 
@@ -77,6 +88,9 @@ function World:render()
     
     -- render player
     self.player_1:render()
+
+    -- Render Wave
+    self.wave:render()
     
     
 end

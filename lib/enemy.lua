@@ -56,7 +56,7 @@ function Enemy:init(world, type, level, x, y, r, dx, dy)
         self.explode_frame_1 = STEALTH_EXPLOSION_1
         self.explode_frame_2 = STEALTH_EXPLOSION_2
         self.weapon = "nuke"
-        self.weapon_interval = 10
+        self.weapon_interval = 100
     elseif self.type == "raider" then
         self.idle_frame = RAIDER_IDLE
         self.left_frame = RAIDER_LEFT
@@ -64,7 +64,7 @@ function Enemy:init(world, type, level, x, y, r, dx, dy)
         self.explode_frame_1 = RAIDER_EXPLOSION_1
         self.explode_frame_2 = RAIDER_EXPLOSION_2
         self.weapon = "bullet"
-        self.weapon_interval = 1
+        self.weapon_interval = 3
     elseif self.type == "destroyer" then
         self.idle_frame = DESTROYER_IDLE
         self.left_frame = DESTROYER_LEFT
@@ -72,7 +72,7 @@ function Enemy:init(world, type, level, x, y, r, dx, dy)
         self.explode_frame_1 = DESTROYER_EXPLOSION_1
         self.explode_frame_2 = DESTROYER_EXPLOSION_2
         self.weapon = "missile"
-        self.weapon_interval = 3
+        self.weapon_interval = 4
     end
 
     -- Generate Animations
@@ -88,8 +88,8 @@ function Enemy:update(dt)
     -- Fire Weapon
     self:fire_weapon()
     self:update_weapon_timer(dt)
-    self.x = self.x+self.dx
-    self.y = self.y+self.dy
+    self.x = self.x+self.dx*dt
+    self.y = self.y+self.dy*dt
 end
 
 function Enemy:render()
