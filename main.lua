@@ -22,10 +22,10 @@ require "lib/wave_generator"
 
 
 
-WINDOW_WIDTH = 512
+WINDOW_WIDTH = 800
 WINDOW_HEIGHT = 800
-VIRTUAL_WIDTH = 500/800*512
 VIRTUAL_HEIGHT = 500
+VIRTUAL_WIDTH = VIRTUAL_HEIGHT/WINDOW_HEIGHT*WINDOW_WIDTH
 
 DEBUG_STATE = false
 
@@ -145,6 +145,10 @@ function love.keypressed(key)
             game_state = "pause_menu"
         elseif game_state == "pause_menu" then
             menu_select:play()
+            world.enemies = {}
+            world.projectiles = {}
+            world.enemy_projectiles = {}
+            world.player_1.score = 0
 --        Disabled Until we need a start menu
 --            game_state = "start_menu"
             game_state = "title_screen"
