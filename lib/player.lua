@@ -87,6 +87,8 @@ function Player:init(world)
     self.animation = self.animations[self.player_state]
 
 --    -- Sounds
+    -- Turn off Damage Warning if playing.
+    world.world_sounds["damage_warning"]:stop()
     world.world_sounds["player_1_engine"]:setVolume(0.1)
     world.world_sounds["player_1_engine"]:setLooping(true)
     world.world_sounds["player_1_engine"]:play()
