@@ -16,18 +16,23 @@ STEALTH_EXPLOSION_1 = 4
 STEALTH_EXPLOSION_2 = 5
 
 -- Raider (Machine Gun)
-RAIDER_IDLE = 6
-RAIDER_RIGHT = 7
-RAIDER_LEFT = 8
-RAIDER_EXPLOSION_1 = 9
-RAIDER_EXPLOSION_2 = 10
+RAIDER_IDLE = 7
+RAIDER_RIGHT = 8
+RAIDER_LEFT = 9
+RAIDER_EXPLOSION_1 = 10
+RAIDER_EXPLOSION_2 = 11
 
 -- Destroyer (Missile)
-DESTROYER_IDLE = 11
-DESTROYER_RIGHT = 12
-DESTROYER_LEFT = 13
-DESTROYER_EXPLOSION_1 = 14
-DESTROYER_EXPLOSION_2 = 15
+DESTROYER_IDLE = 13
+DESTROYER_RIGHT = 14
+DESTROYER_LEFT = 15
+DESTROYER_EXPLOSION_1 = 16
+DESTROYER_EXPLOSION_2 = 17
+
+--Explosion
+EXPLODE_3 = 6
+EXPLODE_4 = 12
+EXPLODE_5 = 18
 
 function Enemy:init(world, type, level, x, y, r, dx, dy)
     -- Set base level variables
@@ -43,6 +48,8 @@ function Enemy:init(world, type, level, x, y, r, dx, dy)
     self.dy = dy
     self.x = x
     self.y = y
+    self.explosion_timer = 0
+    self.explosion_length = 0.5
     
     -- Load textures
     self.texture = love.graphics.newImage("/resources/graphics/enemy_ships.png")
@@ -75,6 +82,9 @@ function Enemy:init(world, type, level, x, y, r, dx, dy)
         self.weapon_interval = 4
     end
 
+    self.explode_frame_3 = EXPLODE_5
+    self.explode_frame_4 = EXPLODE_4
+    self.explode_frame_5 = EXPLODE_3
     -- Generate Animations
     self.animations = self:generate_animations(self.type)
     self.animation = self.animations[self.state]
@@ -87,13 +97,18 @@ end
 function Enemy:update(dt)
     -- Fire Weapon
     self:fire_weapon()
+    self.animation = self.animations[self.state]
+    self.animation:update(dt)
     self:update_weapon_timer(dt)
     self.x = self.x+self.dx*dt
     self.y = self.y+self.dy*dt
+    if self.state=="exploding" then
+        self.explosion_timer = self.explosion_timer+dt
+    end
 end
 
 function Enemy:render()
-    love.graphics.circle('line', self.x, self.y, self.width)
+--    love.graphics.circle('line', self.x, self.y, self.width)
     love.graphics.draw(
         self.texture,
         self.animation:get_current_frame(),
@@ -130,13 +145,17 @@ function Enemy:generate_animations()
             },
             interval = 1
         },
-        ['explode'] = Animation{
+        ['exploding'] = Animation{
             texture = self.texture,
             frames = {
                 self.frames[self.explode_frame_1],
-                self.frames[self.explode_frame_2]
+                self.frames[self.explode_frame_2],
+                self.frames[self.explode_frame_3],
+                self.frames[self.explode_frame_4],
+                self.frames[self.explode_frame_5],
+                self.frames[self.explode_frame_5]
             },
-            interval = 0.5
+            interval = 0.1
         },
     }
     return animations

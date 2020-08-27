@@ -63,11 +63,13 @@ function love.load()
 end
 
 function love.update(dt)
+    -- Update state if game is not paused
     if game_state ~= "pause_menu" then
         world:update(dt)
     end
-
-
+    if world.player_1.player_state == "dead" then
+        game_state = "game_over"
+    end
 end
 
 function love.draw()
@@ -110,8 +112,18 @@ function love.draw()
         love.graphics.rectangle("fill", 73, VIRTUAL_HEIGHT - 12- 8, 20 * (world.player_1.damage-1), 16)
         love.graphics.setColor(1,1,1)
         love.graphics.printf("Score: ".. world.player_1.score, VIRTUAL_WIDTH /2 + 5, VIRTUAL_HEIGHT - 12, VIRTUAL_WIDTH/2, 'left')
-    end 
-    
+
+    end
+
+    if game_state == "game_over" then
+        -- Title Text
+        love.graphics.setFont(title_font)
+        love.graphics.printf("Game Over",0 , 50, VIRTUAL_WIDTH, "center" )
+        love.graphics.printf("Press Enter to Play Again",0 , 80, VIRTUAL_WIDTH, "center" )
+        love.graphics.printf("Press Esc to Return to Main Menu",0 , 110, VIRTUAL_WIDTH, "center" )
+        love.graphics.setFont(default_font)
+    end
+
      push:apply("end")
 
     -- Dubug FPS

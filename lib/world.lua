@@ -24,7 +24,8 @@ function World:init()
         -- Environment Sounds
         ['player_1_engine'] = love.audio.newSource('resources/sounds/thrusters.mp3', 'static'),
         ['player_hit'] = love.audio.newSource('resources/sounds/player_hit.wav', 'static'),
-        ['player_explode'] = love.audio.newSource('resources/sounds/player_explodes.wav', 'static'),
+        ['player_explodes'] = love.audio.newSource('resources/sounds/player_explodes.wav', 'static'),
+        ['player_explodes_1'] = love.audio.newSource('resources/sounds/explosion_1.wav', 'static'),
         ['enemy_explodes'] = love.audio.newSource('resources/sounds/enemy_explode.wav', 'static'),
         ['damage_warning'] = love.audio.newSource('resources/sounds/damage_warning.wav', 'static'),
     }
@@ -196,7 +197,7 @@ function World:collision_detection()
             if detect_projectile_collision(self.projectiles[array_size - i], self.enemies[array_size_2 - j]) == true then
                 self.world_sounds["enemy_explodes"]:play()
                 self.player_1.score = self.player_1.score + 1
-                table.remove(self.enemies, array_size_2 - j)
+                self.enemies[array_size_2 - j].state = "exploding"
                 table.remove(self.projectiles, array_size - i)
                 return
             end
@@ -209,7 +210,8 @@ function World:check_stale(instance, instance_type)
     if instance_type == "enemy" or instance_type == "enemy_projectile" then
         if instance.x - instance.width > VIRTUAL_WIDTH or
                 instance.x + instance.width < 0 or
-                instance.y - instance.height > VIRTUAL_HEIGHT
+                instance.y - instance.height > VIRTUAL_HEIGHT or
+                instance.explosion_timer > instance.explosion_length
             then return true
         end
         return false

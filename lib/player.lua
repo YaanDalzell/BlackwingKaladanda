@@ -42,6 +42,7 @@ function Player:init(world)
     self.play_timer = 0
     self.width = 16
     self.height = 16
+    self.destruction_timer = 0
 
     -- Control Weapons Repeat Rate
     self.cannon_lock = false
@@ -74,12 +75,14 @@ function Player:init(world)
     self.ddx = 0
     self.ddy = 0
     -- Impulse
-    self.impulse = 500
+    self.impulse = 1000
 
 
     -- Load player graphics
     self.texture = love.graphics.newImage("/resources/graphics/player_1_ship.png")
     self.frames = generate_quads(self.texture, self.width, self.height)
+    self.player_explosion_texture = love.graphics.newImage("/resources/graphics/explosion.png")
+    self.player_explosion_frames = generate_quads(self.player_explosion_texture, 16, 20)
     
     -- Animations
     self.animations = self:generate_animations()
@@ -127,44 +130,51 @@ function Player:update(dt)
         self.left_frame = SHIP_LEFT_5
     end
 
-    -- Move this to a behaviours table
-    -- X movement
-    if love.keyboard.isDown('left')  then
-        self.ddx = -self.impulse
-    elseif love.keyboard.isDown('right')  then
-        self.ddx = self.impulse
-    else 
-        if self.dx > 0 then
+    if self.damage < self.max_damage then
+        -- X movement
+        if love.keyboard.isDown('left')  then
+            self.player_state = "left"
+            self.animation = self.animations[self.player_state]
             self.ddx = -self.impulse
-        elseif self.dx < 0 then
+        elseif love.keyboard.isDown('right')  then
+            self.player_state = "right"
+            self.animation = self.animations[self.player_state]
             self.ddx = self.impulse
         else
-            self.ddx = 0
+            self.player_state = "idle"
+            self.animation = self.animations[self.player_state]
+            if self.dx > 0 then
+                self.ddx = -self.impulse
+            elseif self.dx < 0 then
+                self.ddx = self.impulse
+            else
+                self.ddx = 0
+            end
         end
-    end
-    -- Y Movement
-    if love.keyboard.isDown('up')  then
-        self.ddy = -self.impulse
-    elseif love.keyboard.isDown('down')  then
-        self.ddy = self.impulse
-    else 
-        if self.dy > 0 then
+        -- Y Movement
+        if love.keyboard.isDown('up')  then
             self.ddy = -self.impulse
-        elseif self.dy < 0 then
+        elseif love.keyboard.isDown('down')  then
             self.ddy = self.impulse
         else
-            self.ddy = 0
+            if self.dy > 0 then
+                self.ddy = -self.impulse
+            elseif self.dy < 0 then
+                self.ddy = self.impulse
+            else
+                self.ddy = 0
+            end
         end
-    end
-    -- Fire Control
-    if love.keyboard.isDown('space') then
-        self:fire_cannon(self.x, self.y)
-    end
-    if love.keyboard.isDown('lalt') then
-        self:fire_missile(self.x, self.y)
-    end
-    if love.keyboard.isDown('n') then
-        self:fire_nuke(self.x, self.y)
+        -- Fire Control
+        if love.keyboard.isDown('space') then
+            self:fire_cannon(self.x, self.y)
+        end
+        if love.keyboard.isDown('lalt') then
+            self:fire_missile(self.x, self.y)
+        end
+        if love.keyboard.isDown('n') then
+            self:fire_nuke(self.x, self.y)
+        end
     end
 
     -- Update spatials
@@ -173,37 +183,43 @@ function Player:update(dt)
     self.x = math.max(self.width, math.min(self.x+(self.dx*dt), VIRTUAL_WIDTH+self.width/2))
     self.dy = self.dy+math.floor(self.ddy*dt)
     self.y = math.min(world.bottom_player_border-self.height, math.max(self.y+self.dy*dt, world.top_player_border))
-
-    -- Update animation depending on velocity
-    if self.dx > 30  then
-        self.player_state = "right"
-    elseif self.dx < -30 then
-        self.player_state = "left"
-    else 
-        self.player_state = "idle" 
-    end
     
     -- Update Weapon Locks
     self:update_weapon_locks(dt)
     
-    self.animation = self.animations[self.player_state]
+--    self.animation = self.animations[self.player_state]
     self.animation:update(dt)
 
+    -- Time the exploding state of a dead player ship
+    if self.player_state == "exploding" then
+        if self.destruction_timer < 2 then
+            self.destruction_timer = self.destruction_timer + dt
+        elseif self.player_state ~= "dead" then
+            self.player_state = "dead"
+            world.world_sounds["player_explodes_1"]:play()
+        end
+    end
 end
 
 function Player:render()
-    love.graphics.circle('line', math.floor(self.x), math.floor(self.y), 16)
-    love.graphics.draw(
-        self.texture,
-        self.animation:get_current_frame(),
-        math.floor(self.x),
-        math.floor(self.y),
-        0,
-        self.animation.scale_factor*2,
-        self.animation.scale_factor*2,--1,
-        self.width/2,
-        self.height/2
-    )
+--    love.graphics.circle('line', math.floor(self.x), math.floor(self.y), 16)
+    if self.player_state ~= "dead" then
+        if self.player_state ~= "exploding" then
+            tex = self.texture
+        else tex = self.player_explosion_texture
+        end
+        love.graphics.draw(
+            tex,
+            self.animation:get_current_frame(),
+            math.floor(self.x),
+            math.floor(self.y),
+            0,
+            self.animation.scale_factor*2,
+            self.animation.scale_factor*2,--1,
+            self.width/2,
+            self.height/2
+        )
+    end
 end
 
 function Player:generate_animations()
@@ -228,6 +244,23 @@ function Player:generate_animations()
                 self.frames[self.right_frame]
             },
             interval = 1
+        },
+        ["exploding"] = Animation{
+            texture = self.player_explosion_texture,
+            frames = {
+                self.player_explosion_frames[1],
+                self.player_explosion_frames[2],
+                self.player_explosion_frames[1],
+                self.player_explosion_frames[2],
+                self.player_explosion_frames[1],
+                self.player_explosion_frames[2],
+                self.player_explosion_frames[1],
+                self.player_explosion_frames[3],
+                self.player_explosion_frames[4],
+                self.player_explosion_frames[5],
+                self.player_explosion_frames[5],
+            },
+            interval = 0.2
         },
     }
     return animations
@@ -323,12 +356,12 @@ function Player:damage_ship(damage_amount)
     if self.damage == self.max_damage - 1 then
         world.world_sounds["damage_warning"]:setLooping(true)
         world.world_sounds["damage_warning"]:play()
-    end
-
-
-    if self.damage == self.max_damage then
-        world.world_sounds["damage_warning"]:stop()
-        self:destroy_ship()
+    elseif
+        self.damage >= self.max_damage and self.player_state ~= "exploding" and self.player_state ~= "dead" then
+            world.world_sounds["damage_warning"]:stop()
+            self.player_state = "exploding"
+            self.animation = self.animations[self.player_state]
+            world.world_sounds["player_explodes"]:play()
     end
 end
 

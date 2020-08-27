@@ -48,6 +48,8 @@ function Projectile:init(type, x, y, r, dy, offset)
 
     self.texture = love.graphics.newImage("/resources/graphics/projectiles.png")
     self.frames = generate_quads(self.texture, 7, 7)
+    self.explosion_timer = 0
+    self.explosion_length = 0.5
 end
 
 function Projectile:update(dt)
