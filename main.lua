@@ -118,9 +118,9 @@ function love.draw()
     if game_state == "game_over" then
         -- Title Text
         love.graphics.setFont(title_font)
-        love.graphics.printf("Game Over",0 , 50, VIRTUAL_WIDTH, "center" )
-        love.graphics.printf("Press Enter to Play Again",0 , 80, VIRTUAL_WIDTH, "center" )
-        love.graphics.printf("Press Esc to Return to Main Menu",0 , 110, VIRTUAL_WIDTH, "center" )
+        love.graphics.printf("Game Over",0 , 150, VIRTUAL_WIDTH, "center" )
+        love.graphics.printf("Press Enter to Play Again",0 , 200, VIRTUAL_WIDTH, "center" )
+        love.graphics.printf("Press Esc to Return to Main Menu",0 , 250, VIRTUAL_WIDTH, "center" )
         love.graphics.setFont(default_font)
     end
 
@@ -148,10 +148,6 @@ function love.keypressed(key)
         if game_state == 'title_screen' then
             menu_select:play()
             love.event.quit()
---        Disabled Until we need a start menu
---        elseif game_state == "start_menu" then
---            menu_select:play()
---            game_state = "title_screen"
         elseif game_state == "play" then
             menu_select:play()
             game_state = "pause_menu"
@@ -161,22 +157,24 @@ function love.keypressed(key)
             world.projectiles = {}
             world.enemy_projectiles = {}
             world.player_1.score = 0
---        Disabled Until we need a start menu
---            game_state = "start_menu"
             game_state = "title_screen"
+        elseif game_state == 'game_over' then
+            game_state = "title_screen"
+            world.player_1 = Player(world)
+            world.enemies = {}
+            world.wave = Wave(world, 0)
+            world.player_1.score = 0
+            world.enemy_projectiles = {}
         end
     elseif (key == "enter" or key == "return") then
-        if game_state == "title_screen" then
+        if game_state == "title_screen" or game_state == "game_over" then
+            world.player_1 = Player(world)
+            world.enemies = {}
+            world.enemy_projectiles = {}
             menu_select:play()
---          Disabled Until we need a start menu
---          game_state = "start_menu"
-            game_state = "play"
             world.wave = Wave(world, 1)
             world.wave_counter = 1
---        Disabled Until we need a start menu
---        elseif game_state == "start_menu" then
---            menu_select:play()
---            game_state = "play"
+            game_state = "play"
         elseif game_state == "pause_menu" then
             menu_select:play()
             game_state = "play"

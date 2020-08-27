@@ -89,7 +89,7 @@ function Player:init(world)
     
     self.animation = self.animations[self.player_state]
 
---    -- Sounds
+    -- Sounds
     -- Turn off Damage Warning if playing.
     world.world_sounds["damage_warning"]:stop()
     world.world_sounds["player_1_engine"]:setVolume(0.1)
@@ -174,6 +174,14 @@ function Player:update(dt)
         end
         if love.keyboard.isDown('n') then
             self:fire_nuke(self.x, self.y)
+        end
+    else
+        if self.dx > 0 then
+            self.ddx = -self.impulse/3
+        elseif self.dx < 0 then
+            self.ddx = self.impulse/3
+        else
+            self.ddx = 0
         end
     end
 
