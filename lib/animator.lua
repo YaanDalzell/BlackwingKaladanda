@@ -33,8 +33,7 @@ function Animation:update(dt)
     else
         while self.timer>self.interval do
             self.timer = self.timer - self.interval
-            self.currentframe = (self.current_frame + 1) % (#self.frames+1)
-
+            self.current_frame = (self.current_frame + 1) % (#self.frames+1)
             if self.current_frame == 0 then self.current_frame = 1
             end
         end
