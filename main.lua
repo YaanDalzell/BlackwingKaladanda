@@ -44,6 +44,9 @@ function love.load()
         }
     )
 
+    -- Set Set Window Title
+    love.window.setTitle('Black Wing - Kaladanda')
+
     -- Set visual filter
     love.graphics.setDefaultFilter("nearest", "nearest")
 
@@ -165,12 +168,14 @@ function love.keypressed(key)
             world.wave = Wave(world, 0)
             world.player_1.score = 0
             world.enemy_projectiles = {}
+            world.projectiles = {}
         end
     elseif (key == "enter" or key == "return") then
         if game_state == "title_screen" or game_state == "game_over" then
             world.player_1 = Player(world)
             world.enemies = {}
             world.enemy_projectiles = {}
+            world.projectiles = {}
             menu_select:play()
             world.wave = Wave(world, 1)
             world.wave_counter = 1
@@ -186,6 +191,7 @@ function love.keypressed(key)
         else DEBUG_STATE = false
             world:clear_enemy_wave()
             world:clear_projectiles()
+            world.projectiles = {}
             world.player_1 = Player(world)
         end
     end
