@@ -277,7 +277,7 @@ end
 function Player:fire_cannon(x, y, dy)
     if self.cannon_lock == false then
         world.world_sounds["cannon"]:play()
-        bullet = Projectile("bullet", self.x, self.y, math.pi, 1, self.cannon_offset)
+        bullet = Projectile("bullet", self.x, self.y, math.pi, self.cannon_offset)
         table.insert(world.projectiles, bullet)
         self.cannon_lock = true
         self.cannon_timer = 0
@@ -287,7 +287,7 @@ end
 function Player:fire_missile(x, y, dy)
     if self.missile_lock == false then
         world.world_sounds["missile"]:play()
-        missile = Projectile("missile", self.x, self.y, math.pi, 1, self.missile_offset)
+        missile = Projectile("missile", self.x, self.y, math.pi, self.missile_offset, world)
         table.insert(world.projectiles, missile)
         self.missile_lock = true
         self.missile_timer = 0
@@ -299,7 +299,7 @@ function Player:fire_nuke(x, y, dy)
         world.world_sounds["nuke"]:setVolume(0.2)
         world.world_sounds["nuke"]:play()
         world.world_sounds["player_nuke_warning"]:play()
-        nuke = Projectile("nuke", self.x, self.y, math.pi, 1, 0)
+        nuke = Projectile("nuke", self.x, self.y, math.pi, 0)
         table.insert(world.projectiles, nuke)
         self.nuke_lock = true
         self.nuke_timer = 0

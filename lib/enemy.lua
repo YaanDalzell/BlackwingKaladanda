@@ -78,7 +78,7 @@ function Enemy:init(world, type, level, x, y, r, dx, dy)
         self.right_frame = DESTROYER_RIGHT
         self.explode_frame_1 = DESTROYER_EXPLOSION_1
         self.explode_frame_2 = DESTROYER_EXPLOSION_2
-        self.weapon = "missile"
+        self.weapon = "rocket"
         self.weapon_interval = 4
     end
 
