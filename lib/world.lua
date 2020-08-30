@@ -184,11 +184,14 @@ function World:collision_detection()
     --  Check collisions between player ship and enemy projectiles
     array_size = #self.enemy_projectiles
     for i = 0, array_size - 1 do
-        if detect_projectile_collision(self.enemy_projectiles[array_size - i], self.player_1) == true then
-            self.player_1:damage_ship(1)
-            table.remove(self.enemy_projectiles, array_size - i)
+        if self.enemy_projectiles[array_size - i].state == "idle" then
+            if detect_projectile_collision(self.enemy_projectiles[array_size - i], self.player_1) == true then
+                self.player_1:damage_ship(1)
+                self.enemy_projectiles[array_size - i].state = "exploding"
+            end
         end
     end
+
     --  Check collisions between enemy ships and player projectiles
     array_size = #self.projectiles
     local array_size_2 = #self.enemies
@@ -198,7 +201,8 @@ function World:collision_detection()
                 self.world_sounds["enemy_explodes"]:play()
                 self.player_1.score = self.player_1.score + 1
                 self.enemies[array_size_2 - j].state = "exploding"
-                table.remove(self.projectiles, array_size - i)
+                self.projectiles[array_size - i].state = "exploding"
+                --table.remove(self.projectiles, array_size - i)
                 return
             end
         end
@@ -219,7 +223,8 @@ function World:check_stale(instance, instance_type)
     if instance_type == "projectile" then
         if instance.x - instance.width > VIRTUAL_WIDTH or
                 instance.x + instance.width < 0 or
-                instance.y - instance.height < 0
+                instance.y - instance.height < 0 or
+                instance.explosion_timer > instance.explosion_length
         then return true
         end
         return false

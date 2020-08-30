@@ -15,6 +15,7 @@ TILE_MISSILE = 3
 TILE_MISSILE_HIT = 6
 
 function Projectile:init(type, x, y, r, offset, world)
+    self.state = "idle"
     self.x = x+offset
     self.y = y
     self.dx = 0
@@ -22,36 +23,44 @@ function Projectile:init(type, x, y, r, offset, world)
     self.type = type or "bullet"
     self.rotation_offset = r
     if self.type == "bullet" then
+        self.explosion_length = 0.1
         self.velocity = 200
         self.acceleration = 0
         self.width = 1
+        self.damage_radius = 1
         self.height = 2
         self.damage = 0.5
         self.frame = TILE_BULLET
         self.hit_frame = TILE_BULLET_HIT
     elseif self.type == "rocket" then
+        self.explosion_length = 0.1
         self.velocity =  30
-        self.acceleration = 300
+        self.acceleration = 250
+        self.damage_radius = 1
         self.width = 2
         self.height = 6
         self.damage = 1
         self.frame = TILE_MISSILE
         self.hit_frame = TILE_MISSILE_HIT
     elseif self.type == "missile" then
+        self.explosion_length = 0.1
         if #world.enemies > 0 then
             self.target = world.enemies[math.random(1, #world.enemies)]
         end
         self.velocity =  5
         self.acceleration = 500
         self.width = 2
+        self.damage_radius = 30
         self.height = 6
         self.damage = 1
         self.frame = TILE_MISSILE
         self.hit_frame = TILE_MISSILE_HIT
     elseif self.type == "nuke" then
+        self.explosion_length = 0.5
         self.acceleration = 10
         self.velocity =  20
         self.width = 5
+        self.damage_radius = 100
         self.height = 8
         self.damage = 100
         self.frame = TILE_NUKE
@@ -65,7 +74,26 @@ function Projectile:init(type, x, y, r, offset, world)
     self.texture = love.graphics.newImage("/resources/graphics/projectiles.png")
     self.frames = generate_quads(self.texture, 7, 7)
     self.explosion_timer = 0
-    self.explosion_length = 0.5
+
+    self.animations = {
+        ["idle"] = Animation{
+            texture = self.texture,
+            frames = {
+                self.frames[self.frame]
+            },
+            interval = 1
+        },
+        ["exploding"] = Animation{
+            texture = self.texture,
+            frames = {
+                self.frames[self.hit_frame]
+            },
+            interval = 1
+        },
+    }
+
+    self.animation = self.animations[self.state]
+
 end
 
 function Projectile:update(dt)
@@ -76,13 +104,20 @@ function Projectile:update(dt)
     self.dy = self.dy + self.acceleration * math.cos(self.rotation_offset) * dt
     self.x = self.x + self.dx * dt
     self.y = self.y + self.dy * dt
+    self.animation = self.animations[self.state]
+    self.animation:update(dt)
+    if self.state=="exploding" then
+        self.width = self.damage_radius
+        self.height = self.damage_radius
+        self.explosion_timer = self.explosion_timer+dt
+    end
 end
 
 
 function Projectile:render()
    love.graphics.draw(
        self.texture,
-       self.frames[self.frame],
+       self.animation:get_current_frame(),
        self.x,
        self.y,
        -self.rotation_offset,
