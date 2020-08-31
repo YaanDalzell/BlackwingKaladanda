@@ -184,7 +184,9 @@ function World:collision_detection()
     --  Check collisions between player ship and enemy projectiles
     array_size = #self.enemy_projectiles
     for i = 0, array_size - 1 do
-        if self.enemy_projectiles[array_size - i].state == "idle" then
+        if self.enemy_projectiles[array_size - i].state == "idle" or
+                (self.enemy_projectiles[array_size - i].state == "exploding" and
+                        self.enemy_projectiles[array_size - i].type == "nuke") then
             if detect_projectile_collision(self.enemy_projectiles[array_size - i], self.player_1) == true then
                 self.player_1:damage_ship(1)
                 self.enemy_projectiles[array_size - i].state = "exploding"
@@ -202,7 +204,6 @@ function World:collision_detection()
                 self.player_1.score = self.player_1.score + 1
                 self.enemies[array_size_2 - j].state = "exploding"
                 self.projectiles[array_size - i].state = "exploding"
-                --table.remove(self.projectiles, array_size - i)
                 return
             end
         end

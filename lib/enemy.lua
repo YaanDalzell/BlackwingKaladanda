@@ -163,7 +163,7 @@ end
 
 function Enemy:fire_weapon(x, y)
     if self.weapon_lock == false and (self.weapon_timer >= self.weapon_interval or self.weapon_timer == 0) then
-        table.insert(world.enemy_projectiles, Projectile(self.weapon, self.x, self.y, 0, -1, 0))
+        table.insert(world.enemy_projectiles, Projectile(self.weapon, self.x, self.y, 0, 0, self.world))
         if self.weapon == "nuke" then
             world.world_sounds["enemy_nuke_warning"]:play()
         elseif self.weapon == "missile" then

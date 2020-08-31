@@ -56,11 +56,14 @@ function Projectile:init(type, x, y, r, offset, world)
         self.frame = TILE_MISSILE
         self.hit_frame = TILE_MISSILE_HIT
     elseif self.type == "nuke" then
-        self.explosion_length = 0.5
+        self.explosion_length = 1
         self.acceleration = 10
         self.velocity =  20
         self.width = 5
-        self.damage_radius = 500
+        if self.rotation_offset == 0 then
+            self.damage_radius = 100
+        else self.damage_radius = 300
+        end
         self.height = 8
         self.damage = 100
         self.frame = TILE_NUKE
@@ -103,7 +106,7 @@ function Projectile:update(dt)
     if self.type == "nuke" then
         if self.rotation_offset == math.pi and self.y < 200 and self.state ~= "exploding" then
             self.state = "exploding"
-        elseif self.rotation_offset == 0 and self.y < VIRTUAL_HEIGHT - 30 and self.state ~= "exploding"  then
+        elseif self.rotation_offset == 0 and self.y > VIRTUAL_HEIGHT - 60 and self.state ~= "exploding"  then
             self.state = "exploding"
         end
     end
@@ -134,12 +137,9 @@ function Projectile:render()
        3.5)
 
     -- Nuke Effects
-    if self.type == "nuke" and self.state == "exploding" then
-        love.graphics.circle("line", self.x, self.y, self.damage_radius* self.explosion_timer*2)
+    if (self.type == "nuke"  or self.type == "missile") and self.state == "exploding" then
+        love.graphics.circle("line", self.x, self.y, self.damage_radius* self.explosion_timer*8)
         love.graphics.circle("fill", self.x, self.y, 10)
-        love.graphics.circle("line", self.x, self.y, self.damage_radius* self.explosion_timer*1)
-        love.graphics.circle("line", self.x, self.y, self.damage_radius* self.explosion_timer*0.5)
-
     end
 end
 
