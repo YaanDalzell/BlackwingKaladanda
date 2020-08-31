@@ -15,6 +15,12 @@ You are the test pilot of the X1 Blackwing Experimental Super-Luminal Vehicle on
 until a massive invasion fleet decimates earths defenses. Armed with nothing but your guns, missiles and one
 nuclear weapon you must defend yourself until help arrives.
 
+#### Controls
+Movement:   Arrows\
+Cannon:     Space Bar\
+Missiles:   Left Shift\
+Nuclear Core Eject: A
+
 #### Enemy Types    
 Nuclear Steath Bomber (Nukes)\
 Torpedo Bomber (Missiles)\
