@@ -169,10 +169,10 @@ function Player:update(dt)
         if love.keyboard.isDown('space') then
             self:fire_cannon(self.x, self.y)
         end
-        if love.keyboard.isDown('lalt') then
+        if love.keyboard.isDown('lshift') then
             self:fire_missile(self.x, self.y)
         end
-        if love.keyboard.isDown('n') then
+        if love.keyboard.isDown('a') then
             self:fire_nuke(self.x, self.y)
         end
     else
@@ -299,7 +299,7 @@ function Player:fire_nuke(x, y, dy)
         world.world_sounds["nuke"]:setVolume(0.2)
         world.world_sounds["nuke"]:play()
         world.world_sounds["player_nuke_warning"]:play()
-        nuke = Projectile("nuke", self.x, self.y, math.pi, 0)
+        nuke = Projectile("nuke", self.x, self.y, math.pi, 0, world)
         table.insert(world.projectiles, nuke)
         self.nuke_lock = true
         self.nuke_timer = 0

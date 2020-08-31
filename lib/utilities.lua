@@ -40,13 +40,15 @@ function detect_ship_collision(ship_1, ship_2)
 end
 
 function detect_projectile_collision(projectile, ship)
-    if projectile.x - projectile.width > ship.x + ship.width or
-            projectile.x + projectile.width < ship.x - ship.width or
-            projectile.y + projectile.height < ship.y - ship.height or
-            projectile.y - projectile.height > ship.y + ship.height
-    then
-        return false
-    else
-        return true
+    if ship.state ~= "exploding" then
+        if projectile.x - projectile.width > ship.x + ship.width or
+                projectile.x + projectile.width < ship.x - ship.width or
+                projectile.y + projectile.height < ship.y - ship.height or
+                projectile.y - projectile.height > ship.y + ship.height
+        then
+            return false
+        else
+            return true
+        end
     end
 end
