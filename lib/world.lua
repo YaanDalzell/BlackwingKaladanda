@@ -223,7 +223,7 @@ function World:check_stale(instance, instance_type)
     if instance_type == "projectile" then
         if instance.x - instance.width > VIRTUAL_WIDTH or
                 instance.x + instance.width < 0 or
-                instance.y - instance.height < 0 or
+                instance.y + instance.height < 0 or
                 instance.explosion_timer > instance.explosion_length
         then return true
         end
