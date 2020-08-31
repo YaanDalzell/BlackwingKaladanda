@@ -169,10 +169,10 @@ function Player:update(dt)
         if love.keyboard.isDown('space') then
             self:fire_cannon(self.x, self.y)
         end
-        if love.keyboard.isDown('lalt') then
+        if love.keyboard.isDown('lshift') then
             self:fire_missile(self.x, self.y)
         end
-        if love.keyboard.isDown('n') then
+        if love.keyboard.isDown('agit stst') then
             self:fire_nuke(self.x, self.y)
         end
     else

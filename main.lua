@@ -72,6 +72,10 @@ function love.update(dt)
     end
     if world.player_1.player_state == "dead" then
         game_state = "game_over"
+        world.wave = Wave(world, 0)
+        world.wave_counter = 0
+        world.wave_timer = 0
+
     end
 end
 
@@ -125,6 +129,7 @@ function love.draw()
         love.graphics.printf("Press Enter to Play Again",0 , 200, VIRTUAL_WIDTH, "center" )
         love.graphics.printf("Press Esc to Return to Main Menu",0 , 250, VIRTUAL_WIDTH, "center" )
         love.graphics.setFont(default_font)
+
     end
 
      push:apply("end")
@@ -160,6 +165,9 @@ function love.keypressed(key)
             world.projectiles = {}
             world.enemy_projectiles = {}
             world.player_1.score = 0
+            world.wave = Wave(world, 0)
+            world.wave_counter = 0
+            world.wave_timer = 0
             game_state = "title_screen"
         elseif game_state == 'game_over' then
             game_state = "title_screen"
