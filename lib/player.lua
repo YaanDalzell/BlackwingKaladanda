@@ -172,7 +172,7 @@ function Player:update(dt)
         if love.keyboard.isDown('lshift') then
             self:fire_missile(self.x, self.y)
         end
-        if love.keyboard.isDown('agit stst') then
+        if love.keyboard.isDown('a') then
             self:fire_nuke(self.x, self.y)
         end
     else
