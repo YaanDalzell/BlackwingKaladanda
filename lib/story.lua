@@ -1,3 +1,10 @@
+-- Created in VSCode
+-- User: Yaan Dalzell
+-- Date:
+-- Time:
+
+-- Description: Story Information for Blackwing Kaladanda V1.0
+
 story_text = {
 
     -- Menu Fade out
