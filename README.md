@@ -1,4 +1,4 @@
-# BlackwingKaladanda
+# Blackwing: Kaladanda
 
 All assets remain the property of Yaan Dalzell
 No part of this repository is for reproduction or redistribution without prior written consent
