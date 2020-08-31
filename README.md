@@ -10,7 +10,7 @@ Framework: Love2D \
 Scripting: Lua \
 Game Type: Vertical 2D Shooter
 
-####Synopsis
+#### Synopsis 
 You are the test pilot of the X1 Blackwing Experimental Super-Luminal Vehicle on a routine mission
 until a massive invasion fleet decimates earths defenses. Armed with nothing but your guns, missiles and one
 nuclear weapon you must defend yourself until help arrives.
@@ -85,7 +85,7 @@ All Resources Copyright (c) Yaan Dalzell Unless otherwise specified\
 /resources/sounds - Audio, Visual assets etc
 
 
-##Fonts
+## Fonts
 
 advanced_pixel_lcd_7.ttf
     LCD Clock style font - No copyright claim
@@ -112,7 +112,7 @@ player_1_ship.png
 projectiles.png
     pixel art projectiles. Frame size: 7x7, sheet size: 3x2
     
-##Sounds
+## Sounds
 cannon.wav\
 damage_warning.wav\
 enemy_cannon.wav\
