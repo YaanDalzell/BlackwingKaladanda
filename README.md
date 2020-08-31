@@ -31,7 +31,7 @@ Momentum Control Interface \
 Prototype Alcubierre Super-Luminal Warp Drive \
 Dual Regenerative Missile Launchers \
 Dual Regenerative Cannons \
-Ejectable Nuclear Core \
+Ejectable Nuclear Core 
 
 # Structure
 Scripted in Lua, the general structure involves:
