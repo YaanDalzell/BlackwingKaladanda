@@ -299,7 +299,7 @@ function Player:fire_nuke(x, y, dy)
         world.world_sounds["nuke"]:setVolume(0.2)
         world.world_sounds["nuke"]:play()
         world.world_sounds["player_nuke_warning"]:play()
-        nuke = Projectile("nuke", self.x, self.y, math.pi, 0)
+        nuke = Projectile("nuke", self.x, self.y, math.pi, 0, world)
         table.insert(world.projectiles, nuke)
         self.nuke_lock = true
         self.nuke_timer = 0

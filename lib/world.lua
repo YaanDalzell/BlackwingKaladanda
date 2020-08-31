@@ -15,6 +15,7 @@ function World:init()
         ['cannon'] = love.audio.newSource('resources/sounds/cannon.wav', 'static'),
         ['missile'] = love.audio.newSource('resources/sounds/missile.wav', 'static'),
         ['nuke'] = love.audio.newSource('resources/sounds/nuke_warning.wav', 'static'),
+        ['nuke_det'] = love.audio.newSource('resources/sounds/nuke_det.wav', 'static'),
         ['player_nuke_warning'] = love.audio.newSource('resources/sounds/player_nuke_warning.wav', 'static'),
         ['enemy_nuke_warning'] = love.audio.newSource('resources/sounds/enemy_nuke_warning.wav', 'static'),
         ['enemy_missile'] = love.audio.newSource('resources/sounds/enemy_missile.wav', 'static'),

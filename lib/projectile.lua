@@ -20,6 +20,7 @@ function Projectile:init(type, x, y, r, offset, world)
     self.y = y
     self.dx = 0
     self.dy = 0
+    self.world = world
     self.type = type or "bullet"
     self.rotation_offset = r
     if self.type == "bullet" then
@@ -106,8 +107,10 @@ function Projectile:update(dt)
     if self.type == "nuke" then
         if self.rotation_offset == math.pi and self.y < 200 and self.state ~= "exploding" then
             self.state = "exploding"
+            self.world.world_sounds["nuke_det"]:play()
         elseif self.rotation_offset == 0 and self.y > VIRTUAL_HEIGHT - 60 and self.state ~= "exploding"  then
             self.state = "exploding"
+            self.world.world_sounds["nuke_det"]:play()
         end
     end
     self.dx = self.dx + self.acceleration * math.sin(self.rotation_offset) * dt
